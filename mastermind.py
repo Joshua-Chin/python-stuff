@@ -76,3 +76,5 @@ class ComputerPlayer:
         self.guess = random.choice(self.possible)
         return self.guess
         
+if __name__ == '__main__':
+    play(HumanPlayer())
