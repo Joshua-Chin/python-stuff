@@ -20,6 +20,7 @@ def evaluate(guess, actual):
 def play(player):
     hidden = [random.randint(0,5) for _ in range(4)]
     for turn in range(12):
+        player.message("You have %s guesses remaining."%(12-turn))
         guess = player.make_guess()
         evaluation = evaluate(guess, hidden)
 
@@ -32,6 +33,11 @@ def play(player):
 
 class HumanPlayer:
 
+    def __init__(self):
+        print("Welcome to the game of Mastermind!")
+        print("You have 12 guess to find out a hidden combination of "
+              "numbers between 0 and 5 inclusive")
+
     def message(self, message):
         print(message)
 
@@ -40,7 +46,15 @@ class HumanPlayer:
         print("wrong place, right color:" + str(message[1]))
 
     def make_guess(self):
-        return [int(x) for x in input('make a guess:')]
+        while True:
+            try:
+                result = [int(x) for x in input('make a guess:')]
+                if len(result) != 4 or \
+                   not all([0<=y<=5 for y in result]):
+                    raise ValueError
+                return result
+            except ValueError:
+                print("Please input 4 numbers between 0 and 5 inclusive")
 
 class ComputerPlayer:
 
